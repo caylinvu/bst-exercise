@@ -106,9 +106,27 @@ class Tree {
         }
         return minVal;
     }
+
+    find(value) {
+        return this.findRec(this.root, value);
+    }
+
+    findRec(root, value) {
+        if (root === null) {
+            console.log('Value not found in tree')
+            return root;
+        }
+        if (value === root.data) {
+            return root;
+        }
+        if (value < root.data) {
+            return this.findRec(root.left, value);
+        } else if (value > root.data) {
+            return this.findRec(root.right, value);
+        }
+    }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.buildTree();
 console.log(tree);
-tree.prettyPrint(tree.root);
