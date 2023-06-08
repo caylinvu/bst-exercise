@@ -125,8 +125,38 @@ class Tree {
             return this.findRec(root.right, value);
         }
     }
+
+    print(root) {
+        console.log(root);
+    }
+
+    levelOrder(callback, root = this.root) {
+        if (root === null) {
+            return;
+        }
+        let q = [root];
+        let arr = [];
+        let node = '';
+        while (q.length > 0) {
+            node = q.shift();
+            arr.push(node.data);
+            if (node.left != null) {
+                q.push(node.left);
+            }
+            if (node.right != null) {
+                q.push(node.right);
+            }
+            if (callback) {
+                callback(node);
+            }
+        }
+        if (!callback) {
+            return arr;
+        }
+    }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.buildTree();
-console.log(tree);
+// console.log(tree);
+
