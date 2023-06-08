@@ -8,13 +8,14 @@ class Node {
 
 class Tree {
     constructor(arr) {
-        this.arr = arr;
+        this.origArr = arr;
+        this.sortedArr = null;
         this.root = null;
     }
 
     buildTree() {
         let sortedArr = this.removeDuplicates().sort((a, b) => {return a - b});
-        console.log(sortedArr);
+        this.sortedArr = sortedArr;
         let start = 0;
         let end = sortedArr.length - 1;
         this.root = this.sortedArrayToBST(sortedArr, start, end);
@@ -22,7 +23,7 @@ class Tree {
     }
 
     removeDuplicates() {
-        let tmpArr = this.arr;
+        let tmpArr = this.origArr;
         let newArr = [];
         tmpArr.forEach((item) => {
             if (!newArr.includes(item)) {
@@ -55,9 +56,59 @@ class Tree {
             this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
         }
     }
+
+    insert(value) {
+        this.root = this.insertRec(this.root, value);
+    }
+
+    insertRec(root, value) {
+        if (root === null) {
+            root = new Node(value);
+            return root;
+        }
+        if (value < root.data) {
+            root.left = this.insertRec(root.left, value);
+        } if (value > root.data) {
+            root.right = this.insertRec(root.right, value);
+        }
+        return root;
+    }
+
+    delete(value) {
+        this.root = this.deleteRec(this.root, value)
+    }
+
+    deleteRec(root, value) {
+        if (root === null) {
+            return root;
+        }
+        if (value < root.data) {
+            root.left = this.deleteRec(root.left, value);
+        } else if (value > root.data) {
+            root.right = this.deleteRec(root.right, value);
+        } else {
+            if (root.left === null) {
+                return root.right;
+            } else if (root.right === null) {
+                return root.left;
+            }
+            root.data = this.minValue(root.right);
+            root.right = this.deleteRec(root.right, root.data);
+        }
+        return root;
+    }
+
+    minValue(root) {
+        let minVal = root.data;
+        while (root.left != null) {
+            minVal = root.left.data;
+            root = root.left;
+        }
+        return minVal;
+    }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log(tree);
 tree.buildTree();
+console.log(tree);
 tree.prettyPrint(tree.root);
