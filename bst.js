@@ -199,9 +199,25 @@ class Tree {
             return arr;
         }
     }
+
+    height(root = this.root) {
+        if (root === null || (root.left === null && root.right === null)) {
+            return 0;
+        }
+
+        let leftHeight = this.height(root.left) + 1;
+        let rightHeight = this.height(root.right) + 1;
+
+        if (leftHeight >= rightHeight) {
+            return leftHeight;
+        } else if (rightHeight > leftHeight) {
+            return rightHeight;
+        }
+    }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.buildTree();
 console.log(tree);
 tree.prettyPrint(tree.root);
+console.log(tree.height());
