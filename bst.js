@@ -13,8 +13,8 @@ class Tree {
         this.root = null;
     }
 
-    buildTree() {
-        let sortedArr = this.removeDuplicates().sort((a, b) => {return a - b});
+    buildTree(arr = this.origArr) {
+        let sortedArr = this.removeDuplicates(arr).sort((a, b) => {return a - b});
         this.sortedArr = sortedArr;
         let start = 0;
         let end = sortedArr.length - 1;
@@ -22,8 +22,8 @@ class Tree {
         return this.root;
     }
 
-    removeDuplicates() {
-        let tmpArr = this.origArr;
+    removeDuplicates(arr) {
+        let tmpArr = arr;
         let newArr = [];
         tmpArr.forEach((item) => {
             if (!newArr.includes(item)) {
@@ -239,10 +239,15 @@ class Tree {
         return diff <= 1 && this.isBalanced(root.left) && this.isBalanced(root.right);
     }
 
+    rebalance(root = this.root) {
+        let arr = this.inorder();
+        this.origArr = arr;
+        return this.buildTree(arr);
+    }
+
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.buildTree();
 console.log(tree);
 tree.prettyPrint(tree.root);
-console.log(tree.isBalanced(tree.root.right.right));
