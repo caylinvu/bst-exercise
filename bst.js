@@ -44,7 +44,7 @@ class Tree {
         return node;
     }
 
-    prettyPrint(node, prefix = '', isLeft = true) {
+    prettyPrint(node = this.root, prefix = '', isLeft = true) {
         if (node === null) {
             return;
         }
@@ -124,10 +124,6 @@ class Tree {
         } else if (value > root.data) {
             return this.findRec(root.right, value);
         }
-    }
-
-    print(root) {
-        console.log(root);
     }
 
     levelOrder(callback, root = this.root) {
@@ -247,7 +243,9 @@ class Tree {
 
 }
 
-const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-tree.buildTree();
-console.log(tree);
-tree.prettyPrint(tree.root);
+module.exports = Tree;
+
+// const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+// tree.buildTree();
+// console.log(tree);
+// tree.prettyPrint(tree.root);
