@@ -228,10 +228,21 @@ class Tree {
             return this.depth(node, root.right, depth += 1);
         }
     }
+
+    isBalanced(root = this.root) {
+        if (root === null) {
+            return true;
+        }
+        let leftHeight = this.height(root.left);
+        let rightHeight = this.height(root.right);
+        let diff = Math.abs(leftHeight - rightHeight);
+        return diff <= 1 && this.isBalanced(root.left) && this.isBalanced(root.right);
+    }
+
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.buildTree();
 console.log(tree);
 tree.prettyPrint(tree.root);
-console.log(tree.depth(tree.root));
+console.log(tree.isBalanced(tree.root.right.right));
