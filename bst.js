@@ -154,9 +154,54 @@ class Tree {
             return arr;
         }
     }
+
+    inorder(callback, root = this.root, arr = []) {
+        if (root === null) {
+            return;
+        }
+        this.inorder(callback, root.left, arr);
+        if (callback) {
+            callback(root);
+        }
+        arr.push(root.data);
+        this.inorder(callback, root.right, arr);
+        if (!callback) {
+            return arr;
+        }
+    }
+
+    preorder(callback, root = this.root, arr = []) {
+        if (root === null) {
+            return;
+        }
+        if (callback) {
+            callback(root);
+        }
+        arr.push(root.data);
+        this.preorder(callback, root.left, arr);
+        this.preorder(callback, root.right, arr);
+        if (!callback) {
+            return arr;
+        }
+    }
+
+    postorder(callback, root = this.root, arr = []) {
+        if (root === null) {
+            return;
+        }
+        this.postorder(callback, root.left, arr);
+        this.postorder(callback, root.right, arr);
+        if (callback) {
+            callback(root);
+        }
+        arr.push(root.data);
+        if (!callback) {
+            return arr;
+        }
+    }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.buildTree();
-// console.log(tree);
-
+console.log(tree);
+tree.prettyPrint(tree.root);
